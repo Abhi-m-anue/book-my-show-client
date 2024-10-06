@@ -10,11 +10,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link , useNavigate } from "react-router-dom";
 import Axios from 'axios'
 
 import { useForm, SubmitHandler } from "react-hook-form";
+import AuthContext from "@/contexts/AuthContext";
 
 interface Inputs {
   name : string
@@ -24,6 +25,7 @@ interface Inputs {
 
 export function SignUp() {
   const navigate = useNavigate();
+  const {setRole} = useContext(AuthContext)
 
   const {
     register,
@@ -43,7 +45,7 @@ export function SignUp() {
         }
       );
       localStorage.setItem("jwtToken", response.data.token);
-      console.log(response)
+      setRole(response.data.user.role)
       navigate("/home");
     } catch (err: any) {
       setError("email", {

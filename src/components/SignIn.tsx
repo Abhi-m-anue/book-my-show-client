@@ -12,6 +12,8 @@ import Axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useContext } from "react";
+import AuthContext from "@/contexts/AuthContext";
 
 interface Inputs {
   email: string;
@@ -19,7 +21,6 @@ interface Inputs {
 }
 
 export function SignIn() {
-
   const {
     register,
     handleSubmit,
@@ -29,6 +30,8 @@ export function SignIn() {
 
   const navigate = useNavigate();
 
+  const {setRole} = useContext(AuthContext)
+
   const onSubmit: SubmitHandler<Inputs> = async(data) => {
     try {
       const response = await Axios.post(
@@ -36,9 +39,10 @@ export function SignIn() {
         {
           email : data.email,
           password : data.password
-        }
+        },
       );
       localStorage.setItem("jwtToken", response.data.token);
+      setRole(response.data.user.role)
       navigate("/home");
     } catch (err: any) {
       if (err.response.data.msg === "User not registered") {
