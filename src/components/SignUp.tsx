@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Link , useNavigate } from "react-router-dom";
 import Axios from 'axios'
 
@@ -56,7 +56,7 @@ export function SignUp() {
   }
   
   return (
-    <Card className="shadow-md border sm:mt-8 mt-1 mx-auto max-w-sm bg-gray-50 rounded-2xl">
+    <Card className="shadow-md border sm:mt-8 mt-1 mx-auto max-w-sm bg-gray-50 rounded-l">
       <CardHeader className="text-center pb-10">
         <CardTitle className="text-4xl">Sign Up</CardTitle>
         <CardDescription>

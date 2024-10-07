@@ -25,53 +25,51 @@ export function SignIn() {
     register,
     handleSubmit,
     setError,
-    formState: { errors},
+    formState: { errors },
   } = useForm<Inputs>();
 
   const navigate = useNavigate();
 
-  const {setRole} = useContext(AuthContext)
+  const { setRole } = useContext(AuthContext);
 
-  const onSubmit: SubmitHandler<Inputs> = async(data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       const response = await Axios.post(
         `http://localhost:3000/api/v1/auth/login`,
         {
-          email : data.email,
-          password : data.password
-        },
+          email: data.email,
+          password: data.password,
+        }
       );
       localStorage.setItem("jwtToken", response.data.token);
-      setRole(response.data.user.role)
+      setRole(response.data.user.role);
       navigate("/home");
     } catch (err: any) {
       if (err.response.data.msg === "User not registered") {
-        setError("email",{
-          type : 'manual',
-          message : 'Email id not registered'
-        })
+        setError("email", {
+          type: "manual",
+          message: "Email id not registered",
+        });
       } else {
-        setError("password",{
-          type : 'manual',
-          message : 'Incorrect password'
-        })
+        setError("password", {
+          type: "manual",
+          message: "Incorrect password",
+        });
       }
+      console.log(err);
     }
-  }
+  };
 
   return (
     <>
-      <Card className="shadow-md border sm:mt-24 mt-10 mx-auto max-w-sm bg-gray-50 rounded-2xl">
+      <Card className="shadow-md border sm:mt-24 mt-10 mx-auto max-w-sm bg-gray-50 rounded-l">
         <CardHeader className="text-center pb-10">
           <CardTitle className="text-4xl">Welcome back</CardTitle>
           <CardDescription>Enter your information to sign in</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            <form
-              className="grid gap-4"
-              onSubmit={handleSubmit(onSubmit)}
-            >
+            <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
