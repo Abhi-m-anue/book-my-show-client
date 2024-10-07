@@ -45,7 +45,7 @@ const Admin: React.FC = () => {
     if (token) {
       try {
         const response = await Axios.get(
-          "http://localhost:3000/api/v1/admin/movies",
+          "https://book-my-show-server-jdjg.onrender.com/api/v1/admin/movies",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -72,9 +72,8 @@ const Admin: React.FC = () => {
 
     try {
       if (editingMovie) {
-        // Update Movie
         await Axios.patch(
-          `http://localhost:3000/api/v1/admin/movies/${editingMovie._id}`,
+          `https://book-my-show-server-jdjg.onrender.com/api/v1/admin/movies/${editingMovie._id}`,
           data,
           {
             headers: {
@@ -85,7 +84,7 @@ const Admin: React.FC = () => {
         setSuccessMessage("Movie updated successfully!");
       } else {
         // Create Movie
-        await Axios.post(`http://localhost:3000/api/v1/admin/movies`, data, {
+        await Axios.post(`https://book-my-show-server-jdjg.onrender.com/api/v1/admin/movies`, data, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -100,7 +99,7 @@ const Admin: React.FC = () => {
     reset();
     setEditingMovie(null);
     fetchMovies();
-    setTimeout(() => setSuccessMessage(null), 3000); // Clear success message after 3 seconds
+    setTimeout(() => setSuccessMessage(null), 3000); 
   };
 
   const handleEdit = (movie: Movie) => {
@@ -117,14 +116,14 @@ const Admin: React.FC = () => {
     const token = localStorage.getItem("jwtToken");
     if (token && movieToDelete) {
       try {
-        await Axios.delete(`http://localhost:3000/api/v1/admin/movies/${movieToDelete}`, {
+        await Axios.delete(`https://book-my-show-server-jdjg.onrender.com/api/v1/admin/movies/${movieToDelete}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         setSuccessMessage("Movie deleted successfully!");
         fetchMovies();
-        setTimeout(() => setSuccessMessage(null), 3000); // Clear success message after 3 seconds
+        setTimeout(() => setSuccessMessage(null), 3000); 
       } catch (err) {
         console.log(err);
         // navigate to unauthorised page

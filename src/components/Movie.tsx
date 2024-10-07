@@ -34,7 +34,7 @@ const Movie = () => {
     if (token) {
       try {
         const response = await Axios.get(
-          `http://localhost:3000/api/v1/movies/${id}`,
+          `https://book-my-show-server-jdjg.onrender.com/api/v1/movies/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -71,7 +71,7 @@ const Movie = () => {
     if (token) {
       try {
         const response = await Axios.patch(
-          `http://localhost:3000/api/v1/movies/${id}`,
+          `https://book-my-show-server-jdjg.onrender.com/api/v1/movies/${id}`,
           { seatIndex : selectedSeatIndex, status : 'booked'},
           {
             headers: {

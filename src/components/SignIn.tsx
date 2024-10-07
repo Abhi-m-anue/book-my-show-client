@@ -12,7 +12,7 @@ import Axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "@/contexts/AuthContext";
 
 interface Inputs {
@@ -32,10 +32,13 @@ export function SignIn() {
 
   const { setRole } = useContext(AuthContext);
 
+  const [loading, setLoading] = useState(false);
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setLoading(true);
     try {
       const response = await Axios.post(
-        `http://localhost:3000/api/v1/auth/login`,
+        `https://book-my-show-server-jdjg.onrender.com/api/v1/auth/login`,
         {
           email: data.email,
           password: data.password,
@@ -45,7 +48,7 @@ export function SignIn() {
       setRole(response.data.user.role);
       navigate("/home");
     } catch (err: any) {
-      if (err.response.data.msg === "User not registered") {
+      if (err.response?.data?.msg === "User not registered") {
         setError("email", {
           type: "manual",
           message: "Email id not registered",
@@ -57,6 +60,8 @@ export function SignIn() {
         });
       }
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -101,8 +106,15 @@ export function SignIn() {
                   </span>
                 )}
               </div>
-              <Button type="submit" className="w-full">
-                Sign In
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? (
+                  <div className="flex items-center justify-center">
+                    <div className="w-4 h-4 border-2 border-t-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                    Loading...
+                  </div>
+                ) : (
+                  "Sign In"
+                )}
               </Button>
             </form>
           </div>

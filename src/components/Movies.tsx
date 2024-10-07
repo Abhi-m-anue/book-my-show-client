@@ -33,7 +33,7 @@ const Movies = () => {
     if (token) {
       try {
         const response = await Axios.get(
-          "http://localhost:3000/api/v1/movies",
+          "https://book-my-show-server-jdjg.onrender.com/api/v1/movies",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -69,8 +69,6 @@ const Movies = () => {
             </CardHeader>
             <CardFooter className="flex justify-between p-3">
               <p className="text-l font-semibold">{movie.name}</p>
-              {/* <p>book</p> */}
-              {/* <p>Price : {movie.price}</p> */}
             </CardFooter>
           </Card>
         );
